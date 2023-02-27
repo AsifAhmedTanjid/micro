@@ -1,0 +1,212 @@
+/**
+ * Binary Counter for Arduino
+ *
+ * Designed as a project for students to introduce them to Arduinos and
+ * programming.
+ *
+ * Written by Dave Hall - http://davehall.com.au
+ */
+
+// Define our LED pins.
+int ledPin[] = {5,7,9,11};
+
+// The number of LEDS configured.
+int numLeds = (sizeof(ledPin) / sizeof(int));
+
+// Define our input button pin.
+int buttonPin = 3;
+
+// Always start the counter at 0.
+byte counter = 0;
+
+// Calculate the maximum value to be displayed.
+int maxValue = ((int) pow(2, numLeds));
+
+/**
+ * Perform the initial setup of our device.
+ */
+void setup()
+{
+  // Tell the arduino to listen for input from the button.
+  pinMode(buttonPin, INPUT);
+
+  // Tell the arduino to expect output
+  for (int i = 0; i < numLeds; i++) {
+    pinMode(ledPin[i], OUTPUT);
+  }
+
+  // Blink each of the LEDs to confirm the circuit is correct.
+  fastBlink();
+}
+
+/**
+ * What to do continuously until stopped.
+ */
+void loop()
+{
+  // Check if our button is being pressed
+  if (digitalRead(buttonPin) == HIGH) {
+    // Increment the counter.
+    counter++;
+    // Wait half a second so we don't double count presses.
+    delay(500);
+    // Update our display.
+    displayBinary(counter);
+  }
+
+  // Make sure we don't go past our maximum allowed value.
+  if (counter >= maxValue) {
+    // Make sure the user sees all the LEDs lit up.
+    delay(1000);
+    // Clear the LEDs, ready to start again.
+    fastBlink();
+    // Reset our counter.
+    counter = 0;
+  }
+}
+
+/**
+ * Displays the value as a binary number using an array of LEDs.
+ *
+ * Derived from work by M Atkinson.
+ * http://www.multiwingspan.co.uk/arduino.php?page=led5
+ */
+void displayBinary(byte numToShow)
+{
+  // Check each of the bits in our number.
+  for (int i = 0; i < numLeds; i++)
+  {
+    // Is the bit "on"?
+    if (bitRead(numToShow, i) == 1)
+    {
+      // Turn the LED on.
+      digitalWrite(ledPin[i], HIGH);
+    }
+    else
+    {
+      // Turn the LED off.
+      digitalWrite(ledPin[i], LOW);
+    }
+  }
+}
+
+/**
+ * Quickly blink each of the LEDs in order.
+ */
+void fastBlink() {
+  // Loop through our LEDs in reverse order.
+  for (int i = (numLeds - 1); i >= 0; i--) {
+    // Turn the LED on.
+    digitalWrite(ledPin[i], HIGH);
+    // Wait 50ms.
+    delay(50);
+    // Turn the LED off.
+    digitalWrite(ledPin[i], LOW);
+  }
+}
+
+
+----------------------------------------------------------------------------------------------------------------
+
+
+
+
+//LED Binary Counter code
+int buttonState = 0; int LED1 = 5;
+int LED2 = 7;
+int LED3 = 9;
+int LED4 = 11;
+int button=2; void setup() {
+  // put your setup code here, to run once:
+  pinMode(2,INPUT);
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(LED4, OUTPUT);
+} void loop() {
+  // put your main code here, to run repeatedly:
+  buttonState = digitalRead(2);
+  if(buttonState == HIGH) 
+{
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, LOW);               //Shows 0
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, LOW);
+  delay(1000);
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, LOW);               //Shows 1
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, LOW);
+  delay(1000);
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, HIGH);              //Shows 2
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, LOW);
+  delay(1000);
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, HIGH);              //Shows 3
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, LOW);
+  delay(1000);
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, LOW);               //Shows 4
+  digitalWrite(LED3, HIGH);
+  digitalWrite(LED4, LOW);
+  delay(1000);
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, LOW);               //Shows 5
+  digitalWrite(LED3, HIGH);
+  digitalWrite(LED4, LOW);
+  delay(1000);
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, HIGH);              //Shows 6
+  digitalWrite(LED3, HIGH);
+  digitalWrite(LED4, LOW);
+  delay(1000);
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, HIGH);              //Shows 7
+  digitalWrite(LED3, HIGH);
+  digitalWrite(LED4, LOW);
+  delay(1000);
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, LOW);               //Shows 8
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, HIGH);
+  delay(1000);
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, LOW);               //Shows 9
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, HIGH);
+  delay(1000);
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, HIGH);              //Shows 10
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, HIGH);
+  delay(1000);
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, HIGH);              //Shows 11
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, HIGH);
+  delay(1000);
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, LOW);               //Shows 12
+  digitalWrite(LED3, HIGH);
+  digitalWrite(LED4, HIGH);
+  delay(1000);
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, LOW);               //Shows 13
+  digitalWrite(LED3, HIGH);
+  digitalWrite(LED4, HIGH);
+  delay(1000);
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, HIGH);              //Shows 14 
+  digitalWrite(LED3, HIGH);
+  digitalWrite(LED4, HIGH);
+  delay(1000);
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, HIGH);              //Shows 15
+  digitalWrite(LED3, HIGH);
+  digitalWrite(LED4, HIGH);
+  delay(1000);
+  }
+}
